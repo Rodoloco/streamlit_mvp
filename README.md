@@ -40,4 +40,3 @@ A visually appealing, modular Streamlit dashboard for Jira analytics, its still 
 
 ---
 
-Built with ❤️ by following your PRD and best engineering practices.
