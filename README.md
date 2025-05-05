@@ -1,6 +1,6 @@
 # Jira Work Visualization and Insights App (MVP)
 
-A visually appealing, modular Streamlit dashboard for Jira analytics, following software engineering best practices.
+A visually appealing, modular Streamlit dashboard for Jira analytics, its still work progress. 
 
 ## Features
 - Interactive dashboards for Jira Features and Stories
