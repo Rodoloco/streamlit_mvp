@@ -75,3 +75,28 @@ def render_resolution_histogram(df: pd.DataFrame):
     df_res['resolution_time'] = (df_res['resolution_date'] - df_res['created_date']).dt.days
     fig = px.histogram(df_res, x='resolution_time', nbins=10, labels={'resolution_time':'Days to Resolve'})
     st.plotly_chart(fig, use_container_width=True)
+
+def render_gantt_chart(df: pd.DataFrame):
+    st.subheader("Gantt Chart: Issues Timeline by Project")
+    # Only show tasks with both start and end dates
+    tasks = df.copy()
+    tasks = tasks[tasks['created_date'].notnull()]
+    # Use resolution_date if available, else pulled_date as end
+    tasks['end_date'] = tasks['resolution_date'].fillna(tasks['pulled_date'])
+    tasks = tasks[tasks['end_date'].notnull()]
+    if tasks.empty:
+        st.info("No tasks with both start and end dates to display in Gantt chart.")
+        return
+    fig = px.timeline(
+        tasks,
+        x_start='created_date',
+        x_end='end_date',
+        y='issue_summary',
+        color='ProjectName',
+        title="Project Gantt Chart",
+        labels={"issue_summary": "Task", "ProjectName": "Project"},
+        hover_data=["Program", "issue_type", "status", "story_points"]
+    )
+    fig.update_yaxes(autorange="reversed")
+    fig.update_layout(height=600, margin=dict(l=0, r=0, t=40, b=0))
+    st.plotly_chart(fig, use_container_width=True)

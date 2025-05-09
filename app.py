@@ -37,6 +37,12 @@ issue_type = st.sidebar.selectbox("Issue Type", issue_types)
 # Status
 statuses = sorted(data['status'].dropna().unique().tolist())
 status_select = st.sidebar.multiselect("Status", statuses, default=statuses)
+# Program
+programs = ["All"] + sorted(data['Program'].dropna().unique().tolist())
+program_select = st.sidebar.selectbox("Program", programs)
+# ProjectName
+projects = ["All"] + sorted(data['ProjectName'].dropna().unique().tolist())
+project_select = st.sidebar.selectbox("Project Name", projects)
 
 # Filter data
 filtered = data.copy()
@@ -46,6 +52,10 @@ if issue_type != "All":
     filtered = filtered[filtered['issue_type'] == issue_type]
 if status_select:
     filtered = filtered[filtered['status'].isin(status_select)]
+if program_select != "All":
+    filtered = filtered[filtered['Program'] == program_select]
+if project_select != "All":
+    filtered = filtered[filtered['ProjectName'] == project_select]
 
 # Main dashboard
 visuals.render_metrics(filtered)
@@ -72,5 +82,10 @@ with col5:
     visuals.render_backlog_table(filtered)
 with col6:
     visuals.render_inventory_table(filtered)
+
+# Gantt Chart Visualization
+st.markdown("---")
+st.header("Project Timeline (Gantt Chart)")
+visuals.render_gantt_chart(filtered)
 
 st.caption("Built with Streamlit and Plotly.")
