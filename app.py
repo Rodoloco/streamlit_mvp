@@ -14,8 +14,7 @@ st.set_page_config(
 )
 st.title("Jira Work Visualization & Insights Dashboard")
 st.markdown("""
-A modern, interactive dashboard for tracking Jira Features and Stories.\
-_Visuals and features per your PRD._
+A modern, interactive dashboard for tracking Jira Features and Stories.
 """)
 
 # Load data
@@ -74,4 +73,4 @@ with col5:
 with col6:
     visuals.render_inventory_table(filtered)
 
-st.caption("Built with Streamlit, Plotly, and ❤️. Per your PRD.")
+st.caption("Built with Streamlit and Plotly.")
